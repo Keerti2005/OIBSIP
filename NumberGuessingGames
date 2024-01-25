@@ -1,0 +1,50 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        int lowerBound = 1;
+        int upperBound = 100;
+        int maxAttempts = 5;
+        int rounds = 3;
+        int totalScore = 0;
+
+        System.out.println("Welcome to Guess the Number Game!");
+        System.out.println("You need to guess a number between " + lowerBound + " and " + upperBound + ".");
+
+        for (int round = 1; round <= rounds; round++) {
+            int generatedNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+            int attempts = 0;
+            int roundScore = 0;
+
+            System.out.println("\nRound " + round + ":");
+            System.out.println("Guess the number!");
+
+            while (attempts < maxAttempts) {
+                int userGuess = scanner.nextInt();
+                attempts++;
+
+                if (userGuess == generatedNumber) {
+                    System.out.println("Congratulations! You guessed the correct number.");
+                    roundScore = maxAttempts - attempts + 1; // Higher score for fewer attempts
+                    break;
+                } else if (userGuess < generatedNumber) {
+                    System.out.println("Try a higher number. Attempts left: " + (maxAttempts - attempts));
+                } else {
+                    System.out.println("Try a lower number. Attempts left: " + (maxAttempts - attempts));
+                }
+            }
+
+            totalScore += roundScore;
+            System.out.println("Round " + round + " Score: " + roundScore);
+        }
+
+        System.out.println("\nGame Over!");
+        System.out.println("Total Score: " + totalScore);
+
+        scanner.close();
+    }
+}
